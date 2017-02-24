@@ -8,7 +8,6 @@ UPLOAD_FOLDER = 'uploads/sources'
 ALLOWED_EXTENSIONS = set(['tex'])
 
 app = Flask(__name__)
-app.run(host='0.0.0.0')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
