@@ -1,0 +1,14 @@
+dist: trusty
+language: python
+addons:
+  apt:
+    packages:
+      - texlive-base
+      - texlive-science
+      - texlive-fonts-recommended
+      - texlive-fonts-extra
+      - texlive-latex-extra
+      - texlive-xetex
+      - latexmk
+      - lmodern
+      - pgf
