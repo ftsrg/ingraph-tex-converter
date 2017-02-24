@@ -22,5 +22,5 @@ sudo apt-get install -y texlive-base texlive-science texlive-fonts-recommended t
 ## Running the server
 
 ```
-export FLASK_APP=ingraph.py && flask run
+./run.sh
 ```
