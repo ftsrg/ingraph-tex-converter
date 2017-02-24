@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/FTSRG/ingraph-tex-converter.svg?branch=master)](https://travis-ci.org/FTSRG/ingraph-tex-converter)
 
+:warning: **Warning.** This app is intended as a research tool to be run on a single VM. There is zero security involved, i.e. the users might use the web service run malicious scripts.
+
 ## Dependencies
 
 ### ingraph

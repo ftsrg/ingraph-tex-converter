@@ -14,3 +14,5 @@ addons:
       - latexmk
       - lmodern
       - pgf
+script:
+  - python3 ingraph.py
