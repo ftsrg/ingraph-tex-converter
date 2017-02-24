@@ -44,6 +44,7 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
+    filename = secure_filename(filename)
     pdf_filename = filename.rsplit(".", 1)[0] + ".pdf"
     os.system("bash -c 'cd " + app.config['UPLOAD_FOLDER'] + " && latexmk -xelatex -quiet " + filename + "'")
     return send_from_directory(app.config['UPLOAD_FOLDER'], pdf_filename)
