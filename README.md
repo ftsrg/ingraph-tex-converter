@@ -1,5 +1,7 @@
 # ingraph-tex-converter
 
+[![Build Status](https://travis-ci.org/FTSRG/ingraph-tex-converter.svg?branch=master)](https://travis-ci.org/FTSRG/ingraph-tex-converter)
+
 ## Dependencies
 
 ### ingraph

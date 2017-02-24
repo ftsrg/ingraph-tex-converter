@@ -1,4 +1,6 @@
 dist: trusty
+python:
+  - "3.5"
 language: python
 addons:
   apt:
