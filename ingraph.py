@@ -4,10 +4,11 @@ import os
 from flask import Flask, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = 'uploads/sources'
 ALLOWED_EXTENSIONS = set(['tex'])
 
 app = Flask(__name__)
+app.run(host='0.0.0.0')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -44,5 +45,6 @@ def upload_file():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename)
+    pdf_filename = filename.rsplit(".", 1)[0] + ".pdf"
+    os.system("bash -c 'cd " + app.config['UPLOAD_FOLDER'] + " && latexmk -xelatex -quiet " + filename + "'")
+    return send_from_directory(app.config['UPLOAD_FOLDER'], pdf_filename)
