@@ -7,6 +7,10 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = 'uploads/sources'
 ALLOWED_EXTENSIONS = set(['tex'])
 
+RESOURCE_FOLDER = 'resources'
+RELALG_FRAGMENT_KEY = 'is_relalg_fragment'
+ENVELOPE_PLACEHOLDER = '% INSERT_CONTENT_HERE'
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -29,7 +33,15 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            is_relalg_fragment = RELALG_FRAGMENT_KEY in request.form and request.form.get(RELALG_FRAGMENT_KEY)=='1'
+            if is_relalg_fragment:
+                with open(os.path.join(RESOURCE_FOLDER, 'relalg-envelope.tex'), 'r') as envelope_file:
+                    envelope = envelope_file.read()
+                standalone_doc = envelope.replace(ENVELOPE_PLACEHOLDER, file.read().decode("utf-8"))
+                with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), 'w') as standalone_doc_file:
+                    standalone_doc_file.write(standalone_doc)
+            else:
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
     return '''
@@ -43,6 +55,9 @@ def upload_file():
     <form method="post" enctype="multipart/form-data">
       <p><input type="file" name="file">
          <input type="submit" value="Upload">
+      </p>
+      <p>
+         <input type="checkbox" id="''' + RELALG_FRAGMENT_KEY + '''" name="''' + RELALG_FRAGMENT_KEY + '''" value="1" > <label for="''' +RELALG_FRAGMENT_KEY + '''">Relalg TeX fragment only.</label>
       </p>
     </form>
     </body>
